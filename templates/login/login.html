@@ -1,0 +1,80 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- 上述meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'plugins/bootstrap5.3/css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'login/css/login.css' %}" rel="stylesheet"/>
+    <style>
+        .container .text-success {
+            color: cyan !important;
+        }
+    </style>
+    <title>登录</title>
+</head>
+<body>
+<div class="container">
+    <div class="col">
+        <form class="form-login" action="/login/" method="post">
+            {% if login_form.captcha.errors %}
+                <div id = '验证码失败' class="alert alert-warning">{{ login_form.captcha.errors }}</div>
+            {% elif message %}
+                <div id='消息错误' class="alert alert-warning">{{ message }}</div>
+            {% endif %}
+         
+            {% csrf_token %}
+            <h3 class="text-center">欢迎登录</h3>
+            <div class="form-group">
+                {{ login_form.username.label_tag }}
+                {{ login_form.username }}
+            </div>
+            <div class="form-group">
+                {{ login_form.password.label_tag }}
+                {{ login_form.password }}
+            </div>
+            <div class="form-group">
+                {{ login_form.captcha.label_tag }}
+                {{ login_form.captcha }}
+            </div>
+            <div>
+                <a href="/register/" class="text-success ">
+                    <ins>新用户注册</ins>
+                </a>
+                <button type="submit" class="btn btn-primary float-right">登录</button>
+            </div>
+
+        </form>
+    </div>
+</div> <!-- /container -->
+
+<script>
+    // 等待3秒后隐藏错误提示框
+    setTimeout(function() {
+        var errorMessage = document.getElementById('验证码失败');
+        if (errorMessage) {
+            errorMessage.style.display = 'none';
+        }
+    }, 3000);
+</script>
+<script>
+    // 等待3秒后隐藏错误提示框
+    setTimeout(function() {
+        var errorMessage = document.getElementById('消息错误');
+        if (errorMessage) {
+            errorMessage.style.display = 'none';
+        }
+    }, 3000);
+</script>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+{#    以下三者的引用顺序是固定的#}
+<script src="/static/plugins/jquery-3.7.1.min.js"></script>
+<script src="/static/plugins/popper.js"></script>
+<script src="/static/plugins/bootstrap5.3/js/bootstrap.js"></script>
+</body>
+</html>
